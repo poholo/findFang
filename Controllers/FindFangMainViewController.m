@@ -65,8 +65,8 @@ int vl[100]= {1,2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7
 -(void)initDataParam{
     _gamecut = 0;
     _timeGo = 0;
-    _ffwidth = [UIScreen mainScreen].bounds.size.width;
-    _ffx = [UIScreen mainScreen].bounds.size.height/2 -  _ffwidth/2 ;
+    _ffwidth = [UIScreen mainScreen].bounds.size.width<[UIScreen mainScreen].bounds.size.height?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
+    _ffx = ([UIScreen mainScreen].bounds.size.width<[UIScreen mainScreen].bounds.size.height?[UIScreen mainScreen].bounds.size.height:[UIScreen mainScreen].bounds.size.width)/2 -  _ffwidth/2 ;
     
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeTick:) userInfo:nil repeats:YES];
 }
@@ -78,6 +78,17 @@ int vl[100]= {1,2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7
     _rightBoard = [[RightBoard alloc] initWithFrame:CGRectMake(_ffboard.frame.origin.x  + _ffboard.frame.size.width -40 , 20, _ffx +40, _ffwidth) delegate:self];
 
     [self.view addSubview:_rightBoard];
+    
+#if DEBUG
+    _leftBoard.layer.borderColor = [UIColor redColor].CGColor;
+    _leftBoard.layer.borderWidth = 1;
+    
+    _rightBoard.layer.borderColor = [UIColor greenColor].CGColor;
+    _rightBoard.layer.borderWidth = 1;
+    
+    _ffboard.layer.borderColor = [UIColor blueColor].CGColor;
+    _ffboard.layer.borderWidth = 1;
+#endif
     
 }
 
